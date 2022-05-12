@@ -12,7 +12,7 @@ exports.getProducts = (req, res) => {
 
 exports.getIndex = (req, res) => {
     res.render('shop/index', {
-        pageTitle: "My Shop",
+        pageTitle: "My Shop - Home",
         path: "/home"
     });
 };
