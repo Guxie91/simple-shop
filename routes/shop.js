@@ -1,12 +1,14 @@
 const express = require('express');
 const router = express.Router();
 
-const productsController = require('../controllers/products');
+const shopController = require('../controllers/shop');
 
-//homepage GET
+router.get('/home', shopController.getIndex);
+router.get('/products', shopController.getProducts);
+router.get('/cart', shopController.getCart);
+router.get('/contact', shopController.getContact);
+router.get('/checkout', shopController.getCheckout);
 router.get('/', (req, res) => {
     res.redirect('/home');
 });
-router.get('/home', productsController.getProducts);
-
 module.exports = router;
