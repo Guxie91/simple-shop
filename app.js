@@ -1,32 +1,22 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
-const expressHbs = require('express-handlebars');
+const notFoundController = require('./controllers/not-found');
 
 const app = express();
 
-app.engine('hbs', expressHbs({
-    layoutsDir: 'views/layouts',
-    defaultLayout: 'main-layout',
-    extname: 'hbs'
-}));
-app.set('view engine', 'hbs');
+app.set('view engine', 'ejs');
 app.set('views', 'views');
 
-const adminData = require('./routes/admin');
-const userData = require('./routes/shop');
+const adminRoutes = require('./routes/admin');
+const userRoutes = require('./routes/shop');
 
 app.use(bodyParser.urlencoded());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/admin', adminData.routes);
-app.use(userData.routes);
+app.use('/admin', adminRoutes);
+app.use(userRoutes);
 
-app.use((req, res, next) => {
-    res.render('not-found', {
-        pageTitle: "404 Not Found"
-    });
-    //res.sendFile(path.join(__dirname, 'views', 'not-found.html'));
-});
+app.use(notFoundController.getNotFound);
 
 app.listen(3000);
